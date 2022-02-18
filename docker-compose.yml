@@ -1,0 +1,23 @@
+version: "3"
+services:
+  flask:
+    build: 
+      context: .
+      dockerfile: ./settings/flask/Dockerfile
+    container_name: flask
+    environment:
+      - FLASK_APP=main.py
+      - FLASK_ENV=container
+    entrypoint: ./settings/flask/entrypoint.sh
+    expose:
+      - 8080
+
+
+  nginx:  
+    build: ./settings/nginx
+    container_name: nginx
+    ports:
+      - "80:80"
+    depends_on:
+      - flask
+  
